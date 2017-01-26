@@ -8,7 +8,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
 @SpringBootApplication
-@PropertySource(value = { "springApi.properties","springPersistence.properties" })
+@PropertySource(value = { "springApi.properties", "springPersistence.properties" })
 public class RestworldApplication {
 
 	public static void main(String[] args) {

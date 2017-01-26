@@ -9,6 +9,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import restworld.persistence.entity.embeddable.FullName;
+import restworld.persistence.entity.embeddable.WebAppCredentials;
 import restworld.persistence.entity.superclass.Assigned;
 import restworld.persistence.validation.annotation.AssignedNarrative;
 import restworld.persistence.validation.annotation.AssignedNarrativeInAssignedSection;
@@ -20,6 +21,8 @@ public class Employee extends Assigned {
 	
 	@NotNull
 	private FullName name;
+	
+	private WebAppCredentials credentials;
 	
 	@ManyToOne
 	private Employee manager;
@@ -123,5 +126,13 @@ public class Employee extends Assigned {
 		} else if (!subordinates.equals(other.subordinates))
 			return false;
 		return true;
+	}
+
+	public WebAppCredentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(WebAppCredentials credentials) {
+		this.credentials = credentials;
 	}
 }
