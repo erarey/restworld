@@ -10,7 +10,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.UiConfiguration;
 
 @Configuration
-public class SpringFox {
+public class SpringFoxConfiguration {
 
 	/**
 	 * Allows SpringFox to generate the swagger documentation for all endpoints in the project

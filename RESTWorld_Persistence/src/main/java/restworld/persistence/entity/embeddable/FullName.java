@@ -5,7 +5,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 @Embeddable
-public class PersonName {
+public class FullName {
 	
 	@Max(100)
 	@NotNull
@@ -60,7 +60,7 @@ public class PersonName {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PersonName other = (PersonName) obj;
+		FullName other = (FullName) obj;
 		if (first == null) {
 			if (other.first != null)
 				return false;

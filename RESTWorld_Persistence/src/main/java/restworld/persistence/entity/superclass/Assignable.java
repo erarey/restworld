@@ -15,7 +15,7 @@ public abstract class Assignable {
 	private Long id;
 	
 	@ManyToMany
-	Set<Assigned> assigned;
+	private Set<Assigned> assigned;
 
 	public Long getId() {
 		return id;

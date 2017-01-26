@@ -3,9 +3,8 @@ package restworld.persistence.entity;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import restworld.persistence.entity.embeddable.FullName;
@@ -16,48 +15,25 @@ import restworld.persistence.validation.annotation.AssignedSection;
 
 @Entity
 @AssignedNarrativeInAssignedSection
-public class Employee extends Assigned {
+public class Host extends Assigned {
 	
 	@NotNull
 	private FullName name;
 	
-	@ManyToOne
-	private Employee manager;
-	
-	@OneToMany
-	private Set<Employee> subordinates;
-	
-	@AssignedNarrative
-	@OneToOne
-	private Narrative directedNarrative;
-	
-	@NotNull
 	@AssignedSection
 	@ManyToOne
 	private Section section;
 	
+	@AssignedNarrative
+	@ManyToMany
+	private Set<Narrative> narratives;
+
 	public FullName getName() {
 		return name;
 	}
 
 	public void setName(FullName name) {
 		this.name = name;
-	}
-
-	public Employee getManager() {
-		return manager;
-	}
-
-	public void setManager(Employee manager) {
-		this.manager = manager;
-	}
-
-	public Set<Employee> getSubordinates() {
-		return subordinates;
-	}
-
-	public void setSubordinates(Set<Employee> subordinates) {
-		this.subordinates = subordinates;
 	}
 
 	public Section getSection() {
@@ -68,23 +44,21 @@ public class Employee extends Assigned {
 		this.section = section;
 	}
 
-	public Narrative getDirectedNarrative() {
-		return directedNarrative;
+	public Set<Narrative> getNarratives() {
+		return narratives;
 	}
 
-	public void setDirectedNarrative(Narrative directedNarrative) {
-		this.directedNarrative = directedNarrative;
+	public void setNarratives(Set<Narrative> narratives) {
+		this.narratives = narratives;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((directedNarrative == null) ? 0 : directedNarrative.hashCode());
-		result = prime * result + ((manager == null) ? 0 : manager.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((narratives == null) ? 0 : narratives.hashCode());
 		result = prime * result + ((section == null) ? 0 : section.hashCode());
-		result = prime * result + ((subordinates == null) ? 0 : subordinates.hashCode());
 		return result;
 	}
 
@@ -96,32 +70,23 @@ public class Employee extends Assigned {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Employee other = (Employee) obj;
-		if (directedNarrative == null) {
-			if (other.directedNarrative != null)
-				return false;
-		} else if (!directedNarrative.equals(other.directedNarrative))
-			return false;
-		if (manager == null) {
-			if (other.manager != null)
-				return false;
-		} else if (!manager.equals(other.manager))
-			return false;
+		Host other = (Host) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (narratives == null) {
+			if (other.narratives != null)
+				return false;
+		} else if (!narratives.equals(other.narratives))
 			return false;
 		if (section == null) {
 			if (other.section != null)
 				return false;
 		} else if (!section.equals(other.section))
 			return false;
-		if (subordinates == null) {
-			if (other.subordinates != null)
-				return false;
-		} else if (!subordinates.equals(other.subordinates))
-			return false;
 		return true;
 	}
+
 }

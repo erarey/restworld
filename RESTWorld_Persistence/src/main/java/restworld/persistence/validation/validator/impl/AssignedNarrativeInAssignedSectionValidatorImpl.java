@@ -2,11 +2,14 @@ package restworld.persistence.validation.validator.impl;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.ConstraintValidatorContext;
+
+import org.springframework.stereotype.Component;
 
 import restworld.persistence.entity.Narrative;
 import restworld.persistence.entity.Section;
@@ -15,6 +18,7 @@ import restworld.persistence.validation.annotation.AssignedNarrativeInAssignedSe
 import restworld.persistence.validation.annotation.AssignedSection;
 import restworld.persistence.validation.validator.AssignedNarrativeInAssignedSectionValidator;
 
+@Component
 public class AssignedNarrativeInAssignedSectionValidatorImpl implements AssignedNarrativeInAssignedSectionValidator {
 
 	@Override
@@ -22,6 +26,11 @@ public class AssignedNarrativeInAssignedSectionValidatorImpl implements Assigned
 
 	}
 
+	/**
+	 * Type erasure ensures there is no way for this operation to be truly safe,
+	 * so suppress warnings is acceptable until another solution is found
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean isValid(Object target, ConstraintValidatorContext context) {
 
@@ -30,60 +39,56 @@ public class AssignedNarrativeInAssignedSectionValidatorImpl implements Assigned
 			Set<Long> validSectionsForNarratives = new HashSet<Long>();
 			Set<Long> validSectionIds = new HashSet<Long>();
 
-			for (Field f : target.getClass().getDeclaredFields()) {
-				if (f.isAnnotationPresent(AssignedNarrative.class)) {
-					f.setAccessible(true);
-
-					//TODO null check!
+			for (Field field : target.getClass().getDeclaredFields()) {
+				
+				if (field.isAnnotationPresent(AssignedNarrative.class)) {
 					
-					if (f.getType().isInstance(Narrative.class)) {
+					field.setAccessible(true);
 
-						validSectionsForNarratives.addAll(Narrative.class.cast(f.get(target)).getSections().stream()
-								.map(section -> section.getId()).collect(Collectors.toSet()));
+					if (field.getType().isInstance(Narrative.class))
+						validSectionsForNarratives = pullSectionIds(Narrative.class.cast(field.get(target)));
+					else if (field.getType().isInstance(Collection.class))
+						for (Narrative narrative : (Collection<Narrative>) field.get(target))
+							validSectionsForNarratives.addAll(pullSectionIds(narrative));
 
-					} else if (f.getType().isInstance(Collection.class)) {
-
-						Collection<Narrative> narratives = Collection.class.<Narrative>cast(f.get(target));
-						for (Narrative narrative : narratives) {
-
-							validSectionsForNarratives.addAll(narrative.getSections().stream()
-									.map(section -> section.getId()).collect(Collectors.toSet()));
-
-						}
-
-					}
-					
-					//no narratives found, therefore section is irrelevant
-					if(validSectionsForNarratives.size() == 0)
+					// no narratives found, therefore section is irrelevant
+					if (validSectionsForNarratives.size() == 0)
 						return true;
+					field.setAccessible(false);
 					
-					f.setAccessible(false);
-
-				} else if (f.isAnnotationPresent(AssignedSection.class)) {
-					f.setAccessible(true);
-
-					if (f.getType().isInstance(Section.class)) {
-						validSectionIds.add(Section.class.cast(f.get(target)).getId());
-					} else if (f.getType().isInstance(Collection.class)) {
-						Collection<Section> sections = Collection.class.<Section>cast(f.get(target));
-						for (Section section : sections) {
+				} else if (field.isAnnotationPresent(AssignedSection.class)) {
+					
+					field.setAccessible(true);
+					if (field.getType().isInstance(Section.class)) {
+						Section annotatedSection = Section.class.cast(field.get(target));
+						if(annotatedSection != null)
+							validSectionIds.add(annotatedSection.getId());
+					} else if (field.getType().isInstance(Collection.class)) {
+						Collection<Section> sections = Collection.class.cast(field.get(target));
+						for (Section section : sections)
 							validSectionIds.add(section.getId());
-						}
 					}
-
-					f.setAccessible(false);
+					field.setAccessible(false);
+					
 				}
 			}
-
+			// probably not possible to get null in both sets, going to play it safe though
+			validSectionIds.remove(null);
 			validSectionIds.retainAll(validSectionsForNarratives);
 			return validSectionIds.size() > 0;
-
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
+	}
 
+	private static Set<Long> pullSectionIds(Narrative narrative) {
+		if (narrative != null) {
+			Set<Section> narrativeSections = narrative.getSections();
+			if (narrativeSections != null)
+				return narrativeSections.stream().map(section -> section.getId()).collect(Collectors.toSet());
+		}
+		return Collections.emptySet();
 	}
 
 }
