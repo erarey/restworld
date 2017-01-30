@@ -8,11 +8,11 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import restworld.persistence.validation.validator.AssignedNarrativeInAssignedSectionValidator;
+import restworld.persistence.validation.validator.impl.AssignedNarrativeInAssignedSectionValidatorImpl;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Constraint(validatedBy = { AssignedNarrativeInAssignedSectionValidator.class })
+@Constraint(validatedBy = { AssignedNarrativeInAssignedSectionValidatorImpl.class })
 public @interface AssignedNarrativeInAssignedSection {
 	
 	String message() default "{restworld.persistence.validation.annotation.AssignedNarrativeInAssignedSection.message}";

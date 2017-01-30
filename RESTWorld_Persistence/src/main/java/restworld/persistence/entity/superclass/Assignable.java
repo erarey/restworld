@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
-public abstract class Assignable {
+public abstract class Assignable implements BaseEntity {
 	
 	@Id
 	@GeneratedValue
@@ -63,7 +63,4 @@ public abstract class Assignable {
 			return false;
 		return true;
 	}
-	
-	
-
 }

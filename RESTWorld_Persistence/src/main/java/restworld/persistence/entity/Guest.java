@@ -6,9 +6,10 @@ import javax.persistence.Id;
 
 import restworld.persistence.entity.embeddable.FullName;
 import restworld.persistence.entity.embeddable.WebAppCredentials;
+import restworld.persistence.entity.superclass.BaseEntity;
 
 @Entity
-public class Guest {
+public class Guest implements BaseEntity {
 
 	@Id
 	@GeneratedValue

@@ -1,27 +1,19 @@
-package restworld.persistence.entity;
+package restworld.dto;
 
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
+import resworld.datatype.Reference;
 
-import restworld.persistence.entity.superclass.Assignable;
-
-@Entity
-public class Section extends Assignable {
-
-	@NotNull
-	@Column(unique = true)
+public class SectionDto {
+	
+	//private String name;
 	private String name;
 	
-	@ManyToMany
-	private Set<Narrative> narratives;
+	//private Set<Narrative> narratives;
+	private Set<Reference> narratives;
 	
-	@OneToMany
-	private Set<Employee> employees;
+	//private Set<Employee> employees;
+	private Set<Reference> employees;
 
 	public String getName() {
 		return name;
@@ -31,19 +23,19 @@ public class Section extends Assignable {
 		this.name = name;
 	}
 
-	public Set<Narrative> getNarratives() {
+	public Set<Reference> getNarratives() {
 		return narratives;
 	}
 
-	public void setNarratives(Set<Narrative> narratives) {
+	public void setNarratives(Set<Reference> narratives) {
 		this.narratives = narratives;
 	}
 
-	public Set<Employee> getEmployees() {
+	public Set<Reference> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(Set<Employee> employees) {
+	public void setEmployees(Set<Reference> employees) {
 		this.employees = employees;
 	}
 
@@ -65,7 +57,7 @@ public class Section extends Assignable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Section other = (Section) obj;
+		SectionDto other = (SectionDto) obj;
 		if (employees == null) {
 			if (other.employees != null)
 				return false;
@@ -83,5 +75,5 @@ public class Section extends Assignable {
 			return false;
 		return true;
 	}
-	
+
 }

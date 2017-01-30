@@ -6,4 +6,6 @@ import restworld.persistence.entity.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
+	Employee findByCredentialsUsername(String userName);
+	
 }

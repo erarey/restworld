@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
-public abstract class Assigned {
-
+public abstract class Assigned implements BaseEntity {
+	
 	@Id
 	@GeneratedValue
 	private Long id;

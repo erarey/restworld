@@ -9,32 +9,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import restworld.dto.EmployeeDto;
-import restworld.service.EmployeeService;
+import restworld.dto.SectionDto;
+import restworld.service.SectionService;
 
 @RestController
-@RequestMapping("employee")
-public class EmployeeController {
-	
-	private EmployeeService employeeService;
+@RequestMapping("section")
+public class SectionController {
 
-	public EmployeeController(EmployeeService employeeService) {
-		super();
-		this.employeeService = employeeService;
+	SectionService sectionService;
+	
+	public SectionController(SectionService sectionService) {
+		this.sectionService = sectionService;
 	}
 	
 	@GetMapping("{id}")
-	public EmployeeDto getById(@PathVariable Long id, HttpServletResponse httpResponse) {
-		EmployeeDto result = employeeService.get(id);
+	public SectionDto get(@PathVariable Long id, HttpServletResponse httpResponse) {
+		SectionDto result = sectionService.get(id);
 		if(result == null)
 			httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		return result;
 	}
 	
 	@PostMapping
-	public Long getById(@RequestBody EmployeeDto employee, HttpServletResponse httpResponse) {
-		Long id = employeeService.post(employee);
+	public Long post(@RequestBody SectionDto section, HttpServletResponse httpResponse) {
+		Long id = sectionService.post(section);
 		return id;
 	}
-
 }
