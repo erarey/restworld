@@ -2,7 +2,7 @@ package restworld.dto;
 
 import java.util.Set;
 
-import resworld.datatype.Reference;
+import restworld.datatype.Reference;
 
 public class SectionDto {
 	

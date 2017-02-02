@@ -1,4 +1,4 @@
-package resworld.datatype;
+package restworld.datatype;
 
 public class Reference {
 	

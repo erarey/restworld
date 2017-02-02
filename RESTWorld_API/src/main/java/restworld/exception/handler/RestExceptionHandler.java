@@ -1,7 +1,5 @@
 package restworld.exception.handler;
 
-import javax.validation.ConstraintViolationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -12,9 +10,10 @@ import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import restworld.exception.ReferencedEntityNotFoundException;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -41,17 +40,24 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		return errorResponse;
 	}
 
-	@ExceptionHandler
+/*	@ExceptionHandler
 	public final ResponseEntity<Object> handleBadRequest(final Exception ex,
 			final WebRequest request) {
 		ResponseEntity<Object> errorResponse = handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 		log.debug(errorResponse.toString());
 		return errorResponse;
 	}
-	
-    @ExceptionHandler(TransactionSystemException.class)
+*/	
+    @ExceptionHandler
     public ResponseEntity<Object> handleBadTransaction(final TransactionSystemException ex, final WebRequest request) {
         ResponseEntity<Object> errorResponse = handleExceptionInternal(ex, ex.getRootCause().getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+		log.debug(errorResponse.toString());
+		return errorResponse;
+    }
+    
+    @ExceptionHandler
+    public ResponseEntity<Object> handleBadTransaction(final ReferencedEntityNotFoundException ex, final WebRequest request) {
+        ResponseEntity<Object> errorResponse = handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 		log.debug(errorResponse.toString());
 		return errorResponse;
     }

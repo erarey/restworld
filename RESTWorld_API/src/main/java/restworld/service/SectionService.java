@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import restworld.dto.SectionDto;
 import restworld.mapper.SectionMapper;
-import restworld.persistence.entity.Section;
 import restworld.persistence.repository.SectionRepository;
 
 @Service

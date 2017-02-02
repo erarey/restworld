@@ -3,31 +3,34 @@ package restworld.mapper;
 import javax.persistence.EntityManager;
 
 import org.mapstruct.TargetType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import restworld.datatype.Reference;
+import restworld.exception.ReferencedEntityNotFoundException;
 import restworld.persistence.entity.superclass.BaseEntity;
-import resworld.datatype.Reference;
 
 @Component
 public class ReferenceMapper {
 
-    @Autowired
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
-    public <T extends BaseEntity> T resolve(Reference reference, @TargetType Class<T> entityClass) {
-        return reference != null ? entityManager.find( entityClass, reference.getId() ) : null;
+    public ReferenceMapper(EntityManager entityManager) {
+		super();
+		this.entityManager = entityManager;
+	}
+
+	public <T extends BaseEntity> T resolve(Reference reference, @TargetType Class<T> entityClass) {
+        if(reference != null) {
+        	T result = entityManager.find( entityClass, reference.getId() );
+        	if(result == null)
+        		throw new ReferencedEntityNotFoundException(entityClass, reference.getId());
+        	return result;
+        }
+		return null;
     }
 
     public Reference toReference(BaseEntity entity) {
         return entity != null ? new Reference( entity.getId() ) : null;
     }
 
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
-
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
 }

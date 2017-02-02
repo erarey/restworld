@@ -2,34 +2,30 @@ package restworld.dto;
 
 import java.util.Set;
 
-import resworld.datatype.Reference;
+import javax.validation.constraints.NotNull;
+
+import restworld.datatype.Reference;
+import restworld.validation.group.RequiredFieldsNotNull;
 
 public class EmployeeDto {
 	
-	//3 strings
-	//private FullName name;
+	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String firstName;
+	
 	private String middleName;
+	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String lastName;
 	
-	//username
-	//private WebAppCredentials credentials;
+	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String username;
 	
-	//id
-	//private Employee manager;
 	private Reference manager;
 	
-	//[id]
-	//private Set<Employee> subordinates;
 	private Set<Reference> subordinates;
 	
-	//id
-	//private Narrative directedNarrative;
 	private Reference directedNarrative;
 	
-	//id
-	//private Section section;
+	@NotNull(groups = RequiredFieldsNotNull.class)
 	private Reference section;
 
 	public String getFirstName() {
