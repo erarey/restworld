@@ -56,7 +56,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
     
     @ExceptionHandler
-    public ResponseEntity<Object> handleBadTransaction(final ReferencedEntityNotFoundException ex, final WebRequest request) {
+    public ResponseEntity<Object> handleInvalidReference(final ReferencedEntityNotFoundException ex, final WebRequest request) {
         ResponseEntity<Object> errorResponse = handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 		log.debug(errorResponse.toString());
 		return errorResponse;

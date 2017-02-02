@@ -37,16 +37,14 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("{id}")
-	public EmployeeDto getById(@PathVariable Long id, HttpServletResponse httpResponse) {
-		EmployeeDto result = employeeService.get(id);
-		if(result == null)
-			httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-		return result;
+	public EmployeeDto get(@PathVariable Long id) {
+		return employeeService.get(id);
 	}
 	
 	@PostMapping
-	public Long getById(@RequestBody @Validated(RequiredFieldsNotNull.class) EmployeeDto employeeDto, HttpServletResponse httpResponse) {
+	public Long post(@RequestBody @Validated(RequiredFieldsNotNull.class) EmployeeDto employeeDto, HttpServletResponse httpResponse) {
 		Long id = employeeService.post(employeeDto);
+		httpResponse.setStatus(HttpServletResponse.SC_CREATED);
 		return id;
 	}
 	
