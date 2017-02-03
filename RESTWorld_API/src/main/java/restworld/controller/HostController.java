@@ -14,56 +14,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import restworld.dto.NarrativeDto;
-import restworld.dto.SectionDto;
-import restworld.service.NarrativeService;
-import restworld.service.SectionService;
+import restworld.dto.HostDto;
+import restworld.service.HostService;
 import restworld.validation.group.RequiredFieldsNotNull;
 
 @RestController
 @Validated
-@RequestMapping("section")
-public class SectionController {
+@RequestMapping("host")
+public class HostController {
 	
-	private SectionService sectionService;
+	private HostService hostService;
 
-	public SectionController(SectionService sectionService) {
+	public HostController(HostService hostService) {
 		super();
-		this.sectionService = sectionService;
+		this.hostService = hostService;
 	}
 	
 	@RequestMapping(method = RequestMethod.HEAD, value = "{id}")
 	public void has(@PathVariable Long id, HttpServletResponse httpResponse) {
-		if(!sectionService.has(id))
+		if(!hostService.has(id))
 			httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 	}
 	
 	@GetMapping("{id}")
-	public SectionDto get(@PathVariable Long id) {
-		return sectionService.get(id);
+	public HostDto get(@PathVariable Long id) {
+		return hostService.get(id);
 	}
 	
 	@PostMapping
-	public Long post(@RequestBody @Validated(RequiredFieldsNotNull.class) SectionDto sectionDto, HttpServletResponse httpResponse) {
-		Long id = sectionService.post(sectionDto);
+	public Long post(@RequestBody @Validated(RequiredFieldsNotNull.class) HostDto hostDto, HttpServletResponse httpResponse) {
+		Long id = hostService.post(hostDto);
 		httpResponse.setStatus(HttpServletResponse.SC_CREATED);
 		return id;
 	}
 	
 	@PutMapping("{id}")
-	public void put(@PathVariable Long id, @RequestBody @Validated(RequiredFieldsNotNull.class) SectionDto sectionDto, HttpServletResponse httpResponse) {
-		sectionService.put(id, sectionDto);
+	public void put(@PathVariable Long id, @RequestBody @Validated(RequiredFieldsNotNull.class) HostDto hostDto, HttpServletResponse httpResponse) {
+		hostService.put(id, hostDto);
 	}
 	
 	@PatchMapping("{id}")
-	public void patch(@PathVariable Long id, @RequestBody @Validated SectionDto sectionDto, HttpServletResponse httpResponse) {
-		sectionService.patch(id, sectionDto);
+	public void patch(@PathVariable Long id, @RequestBody @Validated HostDto hostDto, HttpServletResponse httpResponse) {
+		hostService.patch(id, hostDto);
 	}
 
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id, HttpServletResponse httpResponse) {
-		sectionService.delete(id);
+		hostService.delete(id);
 	}
 
 }
-

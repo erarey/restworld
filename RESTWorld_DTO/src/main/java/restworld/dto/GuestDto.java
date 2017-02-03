@@ -1,14 +1,11 @@
 package restworld.dto;
 
-import java.util.Set;
-
 import javax.validation.constraints.NotNull;
 
-import restworld.datatype.Reference;
 import restworld.validation.group.RequiredFieldsNotNull;
 
-public class EmployeeDto {
-	
+public class GuestDto {
+
 	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String firstName;
 	
@@ -19,15 +16,6 @@ public class EmployeeDto {
 	
 	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String username;
-	
-	private Reference manager;
-	
-	private Set<Reference> subordinates;
-	
-	private Reference directedNarrative;
-	
-	@NotNull(groups = RequiredFieldsNotNull.class)
-	private Reference section;
 
 	public String getFirstName() {
 		return firstName;
@@ -61,49 +49,13 @@ public class EmployeeDto {
 		this.username = username;
 	}
 
-	public Reference getManager() {
-		return manager;
-	}
-
-	public void setManager(Reference manager) {
-		this.manager = manager;
-	}
-
-	public Set<Reference> getSubordinates() {
-		return subordinates;
-	}
-
-	public void setSubordinates(Set<Reference> subordinates) {
-		this.subordinates = subordinates;
-	}
-
-	public Reference getDirectedNarrative() {
-		return directedNarrative;
-	}
-
-	public void setDirectedNarrative(Reference directedNarrative) {
-		this.directedNarrative = directedNarrative;
-	}
-
-	public Reference getSection() {
-		return section;
-	}
-
-	public void setSection(Reference section) {
-		this.section = section;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((directedNarrative == null) ? 0 : directedNarrative.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((manager == null) ? 0 : manager.hashCode());
 		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
-		result = prime * result + ((section == null) ? 0 : section.hashCode());
-		result = prime * result + ((subordinates == null) ? 0 : subordinates.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -116,12 +68,7 @@ public class EmployeeDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EmployeeDto other = (EmployeeDto) obj;
-		if (directedNarrative == null) {
-			if (other.directedNarrative != null)
-				return false;
-		} else if (!directedNarrative.equals(other.directedNarrative))
-			return false;
+		GuestDto other = (GuestDto) obj;
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
@@ -132,25 +79,10 @@ public class EmployeeDto {
 				return false;
 		} else if (!lastName.equals(other.lastName))
 			return false;
-		if (manager == null) {
-			if (other.manager != null)
-				return false;
-		} else if (!manager.equals(other.manager))
-			return false;
 		if (middleName == null) {
 			if (other.middleName != null)
 				return false;
 		} else if (!middleName.equals(other.middleName))
-			return false;
-		if (section == null) {
-			if (other.section != null)
-				return false;
-		} else if (!section.equals(other.section))
-			return false;
-		if (subordinates == null) {
-			if (other.subordinates != null)
-				return false;
-		} else if (!subordinates.equals(other.subordinates))
 			return false;
 		if (username == null) {
 			if (other.username != null)

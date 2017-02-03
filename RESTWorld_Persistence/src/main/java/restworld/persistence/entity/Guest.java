@@ -15,7 +15,7 @@ public class Guest implements BaseEntity {
 	@GeneratedValue
 	private Long id;
 	
-	private FullName fullName;
+	private FullName name;
 	
 	private WebAppCredentials credentials;
 	
@@ -27,12 +27,12 @@ public class Guest implements BaseEntity {
 		this.id = id;
 	}
 	
-	public FullName getFullName() {
-		return fullName;
+	public FullName getName() {
+		return name;
 	}
 
-	public void setFullName(FullName fullName) {
-		this.fullName = fullName;
+	public void setName(FullName name) {
+		this.name = name;
 	}
 
 	public WebAppCredentials getCredentials() {
@@ -48,7 +48,7 @@ public class Guest implements BaseEntity {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((credentials == null) ? 0 : credentials.hashCode());
-		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -67,10 +67,10 @@ public class Guest implements BaseEntity {
 				return false;
 		} else if (!credentials.equals(other.credentials))
 			return false;
-		if (fullName == null) {
-			if (other.fullName != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!fullName.equals(other.fullName))
+		} else if (!name.equals(other.name))
 			return false;
 		if (id == null) {
 			if (other.id != null)

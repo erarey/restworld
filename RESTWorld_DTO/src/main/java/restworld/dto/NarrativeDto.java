@@ -7,14 +7,14 @@ import javax.validation.constraints.NotNull;
 import restworld.datatype.Reference;
 import restworld.validation.group.RequiredFieldsNotNull;
 
-public class SectionDto {
-	
+public class NarrativeDto {
+
 	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String name;
 	
-	private Set<Reference> narratives;
+	private Set<Reference> sections;
 	
-	private Set<Reference> employees;
+	private Reference director;
 
 	public String getName() {
 		return name;
@@ -24,29 +24,29 @@ public class SectionDto {
 		this.name = name;
 	}
 
-	public Set<Reference> getNarratives() {
-		return narratives;
+	public Set<Reference> getSections() {
+		return sections;
 	}
 
-	public void setNarratives(Set<Reference> narratives) {
-		this.narratives = narratives;
+	public void setSections(Set<Reference> sections) {
+		this.sections = sections;
 	}
 
-	public Set<Reference> getEmployees() {
-		return employees;
+	public Reference getDirector() {
+		return director;
 	}
 
-	public void setEmployees(Set<Reference> employees) {
-		this.employees = employees;
+	public void setDirector(Reference director) {
+		this.director = director;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((employees == null) ? 0 : employees.hashCode());
+		result = prime * result + ((director == null) ? 0 : director.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((narratives == null) ? 0 : narratives.hashCode());
+		result = prime * result + ((sections == null) ? 0 : sections.hashCode());
 		return result;
 	}
 
@@ -58,23 +58,23 @@ public class SectionDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SectionDto other = (SectionDto) obj;
-		if (employees == null) {
-			if (other.employees != null)
+		NarrativeDto other = (NarrativeDto) obj;
+		if (director == null) {
+			if (other.director != null)
 				return false;
-		} else if (!employees.equals(other.employees))
+		} else if (!director.equals(other.director))
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (narratives == null) {
-			if (other.narratives != null)
+		if (sections == null) {
+			if (other.sections != null)
 				return false;
-		} else if (!narratives.equals(other.narratives))
+		} else if (!sections.equals(other.sections))
 			return false;
 		return true;
 	}
-
+	
 }

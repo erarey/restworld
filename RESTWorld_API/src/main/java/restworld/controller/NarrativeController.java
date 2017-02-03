@@ -15,55 +15,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import restworld.dto.NarrativeDto;
-import restworld.dto.SectionDto;
 import restworld.service.NarrativeService;
-import restworld.service.SectionService;
 import restworld.validation.group.RequiredFieldsNotNull;
 
 @RestController
 @Validated
-@RequestMapping("section")
-public class SectionController {
+@RequestMapping("narrative")
+public class NarrativeController {
 	
-	private SectionService sectionService;
+	private NarrativeService narrativeService;
 
-	public SectionController(SectionService sectionService) {
+	public NarrativeController(NarrativeService narrativeService) {
 		super();
-		this.sectionService = sectionService;
+		this.narrativeService = narrativeService;
 	}
 	
 	@RequestMapping(method = RequestMethod.HEAD, value = "{id}")
 	public void has(@PathVariable Long id, HttpServletResponse httpResponse) {
-		if(!sectionService.has(id))
+		if(!narrativeService.has(id))
 			httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 	}
 	
 	@GetMapping("{id}")
-	public SectionDto get(@PathVariable Long id) {
-		return sectionService.get(id);
+	public NarrativeDto get(@PathVariable Long id) {
+		return narrativeService.get(id);
 	}
 	
 	@PostMapping
-	public Long post(@RequestBody @Validated(RequiredFieldsNotNull.class) SectionDto sectionDto, HttpServletResponse httpResponse) {
-		Long id = sectionService.post(sectionDto);
+	public Long post(@RequestBody @Validated(RequiredFieldsNotNull.class) NarrativeDto employeeDto, HttpServletResponse httpResponse) {
+		Long id = narrativeService.post(employeeDto);
 		httpResponse.setStatus(HttpServletResponse.SC_CREATED);
 		return id;
 	}
 	
 	@PutMapping("{id}")
-	public void put(@PathVariable Long id, @RequestBody @Validated(RequiredFieldsNotNull.class) SectionDto sectionDto, HttpServletResponse httpResponse) {
-		sectionService.put(id, sectionDto);
+	public void put(@PathVariable Long id, @RequestBody @Validated(RequiredFieldsNotNull.class) NarrativeDto employeeDto, HttpServletResponse httpResponse) {
+		narrativeService.put(id, employeeDto);
 	}
 	
 	@PatchMapping("{id}")
-	public void patch(@PathVariable Long id, @RequestBody @Validated SectionDto sectionDto, HttpServletResponse httpResponse) {
-		sectionService.patch(id, sectionDto);
+	public void patch(@PathVariable Long id, @RequestBody @Validated NarrativeDto employeeDto, HttpServletResponse httpResponse) {
+		narrativeService.patch(id, employeeDto);
 	}
 
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id, HttpServletResponse httpResponse) {
-		sectionService.delete(id);
+		narrativeService.delete(id);
 	}
 
 }
-
