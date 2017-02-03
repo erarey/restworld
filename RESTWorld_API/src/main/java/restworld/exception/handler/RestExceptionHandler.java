@@ -39,15 +39,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		log.debug(errorResponse.toString());
 		return errorResponse;
 	}
-
-/*	@ExceptionHandler
-	public final ResponseEntity<Object> handleBadRequest(final Exception ex,
-			final WebRequest request) {
-		ResponseEntity<Object> errorResponse = handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-		log.debug(errorResponse.toString());
-		return errorResponse;
-	}
-*/	
+	
     @ExceptionHandler
     public ResponseEntity<Object> handleBadTransaction(final TransactionSystemException ex, final WebRequest request) {
         ResponseEntity<Object> errorResponse = handleExceptionInternal(ex, ex.getRootCause().getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
