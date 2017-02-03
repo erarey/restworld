@@ -3,6 +3,8 @@ package restworld.persistence.entity;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -10,14 +12,18 @@ import javax.validation.constraints.NotNull;
 
 import restworld.persistence.entity.embeddable.FullName;
 import restworld.persistence.entity.embeddable.WebAppCredentials;
-import restworld.persistence.entity.superclass.Assigned;
+import restworld.persistence.entity.superclass.BaseEntity;
 import restworld.persistence.validation.annotation.AssignedNarrative;
 import restworld.persistence.validation.annotation.AssignedNarrativeInAssignedSection;
 import restworld.persistence.validation.annotation.AssignedSection;
 
 @Entity
 @AssignedNarrativeInAssignedSection
-public class Employee extends Assigned {
+public class Employee implements BaseEntity {
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 	
 	@NotNull
 	private FullName name;
@@ -27,7 +33,7 @@ public class Employee extends Assigned {
 	@ManyToOne
 	private Employee manager;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "manager")
 	private Set<Employee> subordinates;
 	
 	@AssignedNarrative
@@ -39,6 +45,14 @@ public class Employee extends Assigned {
 	@ManyToOne
 	private Section section;
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public FullName getName() {
 		return name;
 	}
@@ -83,11 +97,7 @@ public class Employee extends Assigned {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((directedNarrative == null) ? 0 : directedNarrative.hashCode());
-		result = prime * result + ((manager == null) ? 0 : manager.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((section == null) ? 0 : section.hashCode());
-		result = prime * result + ((subordinates == null) ? 0 : subordinates.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -100,30 +110,10 @@ public class Employee extends Assigned {
 		if (getClass() != obj.getClass())
 			return false;
 		Employee other = (Employee) obj;
-		if (directedNarrative == null) {
-			if (other.directedNarrative != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!directedNarrative.equals(other.directedNarrative))
-			return false;
-		if (manager == null) {
-			if (other.manager != null)
-				return false;
-		} else if (!manager.equals(other.manager))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (section == null) {
-			if (other.section != null)
-				return false;
-		} else if (!section.equals(other.section))
-			return false;
-		if (subordinates == null) {
-			if (other.subordinates != null)
-				return false;
-		} else if (!subordinates.equals(other.subordinates))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

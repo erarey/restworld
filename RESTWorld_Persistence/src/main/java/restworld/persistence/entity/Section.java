@@ -4,24 +4,38 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import restworld.persistence.entity.superclass.Assignable;
+import restworld.persistence.entity.superclass.BaseEntity;
 
 @Entity
-public class Section extends Assignable {
+public class Section implements BaseEntity {
 
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	@NotNull
 	@Column(unique = true)
 	private String name;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy = "sections")
 	private Set<Narrative> narratives;
 	
-	@OneToMany
-	private Set<Employee> employees;
+	@OneToMany(mappedBy = "section")
+	private Set<Employee> employees;	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -51,9 +65,7 @@ public class Section extends Assignable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((employees == null) ? 0 : employees.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((narratives == null) ? 0 : narratives.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -66,20 +78,10 @@ public class Section extends Assignable {
 		if (getClass() != obj.getClass())
 			return false;
 		Section other = (Section) obj;
-		if (employees == null) {
-			if (other.employees != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!employees.equals(other.employees))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (narratives == null) {
-			if (other.narratives != null)
-				return false;
-		} else if (!narratives.equals(other.narratives))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import restworld.dto.NarrativeDto;
 import restworld.dto.SectionDto;
-import restworld.service.NarrativeService;
 import restworld.service.SectionService;
 import restworld.validation.group.RequiredFieldsNotNull;
 

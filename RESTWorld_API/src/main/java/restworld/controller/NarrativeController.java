@@ -54,8 +54,8 @@ public class NarrativeController {
 	}
 	
 	@PatchMapping("{id}")
-	public void patch(@PathVariable Long id, @RequestBody @Validated NarrativeDto employeeDto, HttpServletResponse httpResponse) {
-		narrativeService.patch(id, employeeDto);
+	public void patch(@PathVariable Long id, @RequestBody @Validated NarrativeDto narrativeDto, HttpServletResponse httpResponse) {
+		narrativeService.patch(id, narrativeDto);
 	}
 
 	@DeleteMapping("{id}")

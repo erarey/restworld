@@ -14,6 +14,8 @@ public class NarrativeDto {
 	
 	private Set<Reference> sections;
 	
+	private Set<Reference> hosts;
+	
 	private Reference director;
 
 	public String getName() {
@@ -32,6 +34,14 @@ public class NarrativeDto {
 		this.sections = sections;
 	}
 
+	public Set<Reference> getHosts() {
+		return hosts;
+	}
+
+	public void setHosts(Set<Reference> hosts) {
+		this.hosts = hosts;
+	}
+
 	public Reference getDirector() {
 		return director;
 	}
@@ -45,6 +55,7 @@ public class NarrativeDto {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((director == null) ? 0 : director.hashCode());
+		result = prime * result + ((hosts == null) ? 0 : hosts.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((sections == null) ? 0 : sections.hashCode());
 		return result;
@@ -63,6 +74,11 @@ public class NarrativeDto {
 			if (other.director != null)
 				return false;
 		} else if (!director.equals(other.director))
+			return false;
+		if (hosts == null) {
+			if (other.hosts != null)
+				return false;
+		} else if (!hosts.equals(other.hosts))
 			return false;
 		if (name == null) {
 			if (other.name != null)
