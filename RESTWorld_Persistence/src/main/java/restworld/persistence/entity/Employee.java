@@ -10,8 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import restworld.persistence.entity.embeddable.Credentials;
 import restworld.persistence.entity.embeddable.FullName;
-import restworld.persistence.entity.embeddable.WebAppCredentials;
 import restworld.persistence.entity.superclass.BaseEntity;
 import restworld.persistence.validation.annotation.AssignedNarrative;
 import restworld.persistence.validation.annotation.AssignedNarrativeInAssignedSection;
@@ -19,7 +19,7 @@ import restworld.persistence.validation.annotation.AssignedSection;
 
 @Entity
 @AssignedNarrativeInAssignedSection
-public class Employee implements BaseEntity {
+public class Employee implements BaseEntity<Long> {
 	
 	@Id
 	@GeneratedValue
@@ -28,7 +28,7 @@ public class Employee implements BaseEntity {
 	@NotNull
 	private FullName name;
 	
-	private WebAppCredentials credentials;
+	private Credentials credentials;
 	
 	@ManyToOne
 	private Employee manager;
@@ -118,11 +118,11 @@ public class Employee implements BaseEntity {
 		return true;
 	}
 
-	public WebAppCredentials getCredentials() {
+	public Credentials getCredentials() {
 		return credentials;
 	}
 
-	public void setCredentials(WebAppCredentials credentials) {
+	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
 }

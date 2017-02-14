@@ -17,7 +17,7 @@ import restworld.persistence.validation.annotation.AssignedSection;
 
 @Entity
 @AssignedNarrativeInAssignedSection
-public class Host implements BaseEntity {
+public class Host implements BaseEntity<Long> {
 	
 	@Id
 	@GeneratedValue

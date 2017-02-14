@@ -9,13 +9,16 @@ import restworld.persistence.entity.Employee;
 import restworld.persistence.repository.EmployeeRepository;
 import restworld.component.ServiceUtilities.IdChecker;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EmployeeService {
 	
-	EmployeeRepository employeeRepository;
-	EmployeeMapper employeeMapper;
-	ServiceUtilities serviceUtilities;
-	IdChecker idChecker;
+	private final EmployeeRepository employeeRepository;
+	private final EmployeeMapper employeeMapper;
+	private final ServiceUtilities serviceUtilities;
+	private final IdChecker idChecker;
 	
 	public EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper, ServiceUtilities serviceUtilities) {
 		super();
@@ -25,13 +28,21 @@ public class EmployeeService {
 		this.idChecker = serviceUtilities.buildIdChecker(Employee.class, this::has);
 	}
 
+	public List<EmployeeDto> index() {
+		return employeeRepository
+				.findAll()
+				.stream()
+				.map(employeeMapper::toEmployeeDto)
+				.collect(Collectors.toList());
+	}
+
 	public EmployeeDto get(Long id) {
 		idChecker.exists(id);
-		return employeeMapper.employeeToEmployeeDto(employeeRepository.findOne(id));
+		return employeeMapper.toEmployeeDto(employeeRepository.findOne(id));
 	}
 
 	public Long post(EmployeeDto employeeDto) {
-		return employeeRepository.save(employeeMapper.employeeDtoToEmployee(employeeDto)).getId();
+		return employeeRepository.save(employeeMapper.toEmployee(employeeDto)).getId();
 	}
 
 	public boolean has(Long id) {
@@ -42,14 +53,14 @@ public class EmployeeService {
 
 	public void put(Long id, EmployeeDto employeeDto) {
 		idChecker.exists(id);
-		Employee employee = employeeMapper.employeeDtoToEmployee(employeeDto);
+		Employee employee = employeeMapper.toEmployee(employeeDto);
 		employee.setId(id);
 		employeeRepository.save(employee);
 	}
 	
 	public void patch(Long id, EmployeeDto employeeDto) {
 		idChecker.exists(id);
-		employeeRepository.save(serviceUtilities.copyNonNullProperties(employeeMapper.employeeDtoToEmployee(employeeDto), employeeRepository.findOne(id)));
+		employeeRepository.save(serviceUtilities.copyNonNullProperties(employeeMapper.toEmployee(employeeDto), employeeRepository.findOne(id)));
 	}
 	
 	public void delete(Long id) {

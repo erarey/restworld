@@ -28,11 +28,11 @@ public class GuestService {
 
 	public GuestDto get(Long id) {
 		idChecker.exists(id);
-		return guestMapper.guestToGuestDto(guestRepository.findOne(id));
+		return guestMapper.toGuestDto(guestRepository.findOne(id));
 	}
 
 	public Long post(GuestDto guestDto) {
-		return guestRepository.save(guestMapper.guestDtoToGuest(guestDto)).getId();
+		return guestRepository.save(guestMapper.toGuest(guestDto)).getId();
 	}
 
 	public boolean has(Long id) {
@@ -43,14 +43,14 @@ public class GuestService {
 
 	public void put(Long id, GuestDto guestDto) {
 		idChecker.exists(id);
-		Guest guest = guestMapper.guestDtoToGuest(guestDto);
+		Guest guest = guestMapper.toGuest(guestDto);
 		guest.setId(id);
 		guestRepository.save(guest);
 	}
 	
 	public void patch(Long id, GuestDto guestDto) {
 		idChecker.exists(id);
-		guestRepository.save(serviceUtilities.copyNonNullProperties(guestMapper.guestDtoToGuest(guestDto), guestRepository.findOne(id)));
+		guestRepository.save(serviceUtilities.copyNonNullProperties(guestMapper.toGuest(guestDto), guestRepository.findOne(id)));
 	}
 	
 	public void delete(Long id) {

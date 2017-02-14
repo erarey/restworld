@@ -9,6 +9,8 @@ import restworld.datatype.Reference;
 import restworld.exception.ReferencedEntityNotFoundException;
 import restworld.persistence.entity.superclass.BaseEntity;
 
+import java.io.Serializable;
+
 @Component
 public class ReferenceMapper {
 
@@ -19,9 +21,9 @@ public class ReferenceMapper {
 		this.entityManager = entityManager;
 	}
 
-	public <T extends BaseEntity> T resolve(Reference reference, @TargetType Class<T> entityClass) {
+	public <Entity extends BaseEntity<Id>, Id extends Serializable> Entity toEntity(Reference<Entity, Id> reference, @TargetType Class<Entity> entityClass) {
         if(reference != null) {
-        	T result = entityManager.find( entityClass, reference.getId() );
+        	Entity result = entityManager.find( entityClass, reference.getId() );
         	if(result == null)
         		throw new ReferencedEntityNotFoundException(entityClass, reference.getId());
         	return result;
@@ -29,8 +31,8 @@ public class ReferenceMapper {
 		return null;
     }
 
-    public Reference toReference(BaseEntity entity) {
-        return entity != null ? new Reference( entity.getId() ) : null;
+    public <Entity extends BaseEntity<Id>, Id extends Serializable> Reference<Entity, Id> toReference(Entity entity) {
+        return entity != null ? new Reference<>( entity.getId() ) : null;
     }
 
 }

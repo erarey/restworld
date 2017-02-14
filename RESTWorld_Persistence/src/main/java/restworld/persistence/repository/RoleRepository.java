@@ -6,4 +6,6 @@ import restworld.persistence.entity.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long>{
 
+    public Role findByTitle(String title);
+
 }

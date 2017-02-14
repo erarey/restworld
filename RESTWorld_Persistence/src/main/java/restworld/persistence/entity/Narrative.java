@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import restworld.persistence.entity.superclass.BaseEntity;
 
 @Entity
-public class Narrative implements BaseEntity {
+public class Narrative implements BaseEntity<Long> {
 
 	@Id
 	@GeneratedValue

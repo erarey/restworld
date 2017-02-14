@@ -1,3 +1,5 @@
+
+## Eclipse-Specific
 .metadata
 bin/
 tmp/
@@ -49,3 +51,7 @@ target
 
 # Code Recommenders
 .recommenders/
+
+## Jetbrains-Specific
+.idea
+*.iml

@@ -5,18 +5,31 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 import restworld.datatype.Reference;
+import restworld.persistence.entity.Employee;
+import restworld.persistence.entity.Host;
+import restworld.persistence.entity.Section;
 import restworld.validation.group.RequiredFieldsNotNull;
 
 public class NarrativeDto {
 
+	private Long id;
+
 	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String name;
 	
-	private Set<Reference> sections;
+	private Set<Reference<Section, Long>> sections;
 	
-	private Set<Reference> hosts;
+	private Set<Reference<Host, Long>> hosts;
 	
-	private Reference director;
+	private Reference<Employee, Long> director;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -26,71 +39,51 @@ public class NarrativeDto {
 		this.name = name;
 	}
 
-	public Set<Reference> getSections() {
+	public Set<Reference<Section, Long>> getSections() {
 		return sections;
 	}
 
-	public void setSections(Set<Reference> sections) {
+	public void setSections(Set<Reference<Section, Long>> sections) {
 		this.sections = sections;
 	}
 
-	public Set<Reference> getHosts() {
+	public Set<Reference<Host, Long>> getHosts() {
 		return hosts;
 	}
 
-	public void setHosts(Set<Reference> hosts) {
+	public void setHosts(Set<Reference<Host, Long>> hosts) {
 		this.hosts = hosts;
 	}
 
-	public Reference getDirector() {
+	public Reference<Employee, Long> getDirector() {
 		return director;
 	}
 
-	public void setDirector(Reference director) {
+	public void setDirector(Reference<Employee, Long> director) {
 		this.director = director;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((director == null) ? 0 : director.hashCode());
-		result = prime * result + ((hosts == null) ? 0 : hosts.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((sections == null) ? 0 : sections.hashCode());
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		NarrativeDto that = (NarrativeDto) o;
+
+		if (id != null ? !id.equals(that.id) : that.id != null) return false;
+		if (name != null ? !name.equals(that.name) : that.name != null) return false;
+		if (sections != null ? !sections.equals(that.sections) : that.sections != null) return false;
+		if (hosts != null ? !hosts.equals(that.hosts) : that.hosts != null) return false;
+		return director != null ? director.equals(that.director) : that.director == null;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		NarrativeDto other = (NarrativeDto) obj;
-		if (director == null) {
-			if (other.director != null)
-				return false;
-		} else if (!director.equals(other.director))
-			return false;
-		if (hosts == null) {
-			if (other.hosts != null)
-				return false;
-		} else if (!hosts.equals(other.hosts))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (sections == null) {
-			if (other.sections != null)
-				return false;
-		} else if (!sections.equals(other.sections))
-			return false;
-		return true;
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (sections != null ? sections.hashCode() : 0);
+		result = 31 * result + (hosts != null ? hosts.hashCode() : 0);
+		result = 31 * result + (director != null ? director.hashCode() : 0);
+		return result;
 	}
-	
 }

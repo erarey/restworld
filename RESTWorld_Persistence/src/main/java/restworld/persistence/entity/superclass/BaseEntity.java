@@ -1,9 +1,11 @@
 package restworld.persistence.entity.superclass;
 
-public interface BaseEntity {
+import java.io.Serializable;
 
-	public Long getId();
+public interface BaseEntity<Id extends Serializable> {
 
-	public void setId(Long id);
+	public Id getId();
+
+	public void setId(Id id);
 
 }

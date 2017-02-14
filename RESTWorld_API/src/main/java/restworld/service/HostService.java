@@ -27,11 +27,11 @@ public class HostService {
 
 	public HostDto get(Long id) {
 		idChecker.exists(id);
-		return hostMapper.hostToHostDto(hostRepository.findOne(id));
+		return hostMapper.toHostDto(hostRepository.findOne(id));
 	}
 
 	public Long post(HostDto hostDto) {
-		return hostRepository.save(hostMapper.hostDtoToHost(hostDto)).getId();
+		return hostRepository.save(hostMapper.toHost(hostDto)).getId();
 	}
 
 	public boolean has(Long id) {
@@ -42,14 +42,14 @@ public class HostService {
 
 	public void put(Long id, HostDto hostDto) {
 		idChecker.exists(id);
-		Host host = hostMapper.hostDtoToHost(hostDto);
+		Host host = hostMapper.toHost(hostDto);
 		host.setId(id);
 		hostRepository.save(host);
 	}
 	
 	public void patch(Long id, HostDto hostDto) {
 		idChecker.exists(id);
-		hostRepository.save(serviceUtilities.copyNonNullProperties(hostMapper.hostDtoToHost(hostDto), hostRepository.findOne(id)));
+		hostRepository.save(serviceUtilities.copyNonNullProperties(hostMapper.toHost(hostDto), hostRepository.findOne(id)));
 	}
 	
 	public void delete(Long id) {

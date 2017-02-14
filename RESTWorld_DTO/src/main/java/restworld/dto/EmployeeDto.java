@@ -5,9 +5,14 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 import restworld.datatype.Reference;
+import restworld.persistence.entity.Employee;
+import restworld.persistence.entity.Narrative;
+import restworld.persistence.entity.Section;
 import restworld.validation.group.RequiredFieldsNotNull;
 
 public class EmployeeDto {
+
+	private Long id;
 	
 	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String firstName;
@@ -18,16 +23,24 @@ public class EmployeeDto {
 	private String lastName;
 	
 	@NotNull(groups = RequiredFieldsNotNull.class)
-	private String username;
+	private CredentialsDto credentials;
 	
-	private Reference manager;
+	private Reference<Employee, Long> manager;
 	
-	private Set<Reference> subordinates;
+	private Set<Reference<Employee, Long>> subordinates;
 	
-	private Reference directedNarrative;
+	private Reference<Narrative, Long> directedNarrative;
 	
 	@NotNull(groups = RequiredFieldsNotNull.class)
-	private Reference section;
+	private Reference<Section, Long> section;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -53,110 +66,76 @@ public class EmployeeDto {
 		this.lastName = lastName;
 	}
 
-	public String getUsername() {
-		return username;
+	public CredentialsDto getCredentials() {
+		return credentials;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setCredentials(CredentialsDto credentials) {
+		this.credentials = credentials;
 	}
 
-	public Reference getManager() {
+	public Reference<Employee, Long> getManager() {
 		return manager;
 	}
 
-	public void setManager(Reference manager) {
+	public void setManager(Reference<Employee, Long> manager) {
 		this.manager = manager;
 	}
 
-	public Set<Reference> getSubordinates() {
+	public Set<Reference<Employee, Long>> getSubordinates() {
 		return subordinates;
 	}
 
-	public void setSubordinates(Set<Reference> subordinates) {
+	public void setSubordinates(Set<Reference<Employee, Long>> subordinates) {
 		this.subordinates = subordinates;
 	}
 
-	public Reference getDirectedNarrative() {
+	public Reference<Narrative, Long> getDirectedNarrative() {
 		return directedNarrative;
 	}
 
-	public void setDirectedNarrative(Reference directedNarrative) {
+	public void setDirectedNarrative(Reference<Narrative, Long> directedNarrative) {
 		this.directedNarrative = directedNarrative;
 	}
 
-	public Reference getSection() {
+	public Reference<Section, Long> getSection() {
 		return section;
 	}
 
-	public void setSection(Reference section) {
+	public void setSection(Reference<Section, Long> section) {
 		this.section = section;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((directedNarrative == null) ? 0 : directedNarrative.hashCode());
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((manager == null) ? 0 : manager.hashCode());
-		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
-		result = prime * result + ((section == null) ? 0 : section.hashCode());
-		result = prime * result + ((subordinates == null) ? 0 : subordinates.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		EmployeeDto that = (EmployeeDto) o;
+
+		if (id != null ? !id.equals(that.id) : that.id != null) return false;
+		if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+		if (middleName != null ? !middleName.equals(that.middleName) : that.middleName != null) return false;
+		if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+		if (credentials != null ? !credentials.equals(that.credentials) : that.credentials != null) return false;
+		if (manager != null ? !manager.equals(that.manager) : that.manager != null) return false;
+		if (subordinates != null ? !subordinates.equals(that.subordinates) : that.subordinates != null) return false;
+		if (directedNarrative != null ? !directedNarrative.equals(that.directedNarrative) : that.directedNarrative != null)
+			return false;
+		return section != null ? section.equals(that.section) : that.section == null;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		EmployeeDto other = (EmployeeDto) obj;
-		if (directedNarrative == null) {
-			if (other.directedNarrative != null)
-				return false;
-		} else if (!directedNarrative.equals(other.directedNarrative))
-			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (manager == null) {
-			if (other.manager != null)
-				return false;
-		} else if (!manager.equals(other.manager))
-			return false;
-		if (middleName == null) {
-			if (other.middleName != null)
-				return false;
-		} else if (!middleName.equals(other.middleName))
-			return false;
-		if (section == null) {
-			if (other.section != null)
-				return false;
-		} else if (!section.equals(other.section))
-			return false;
-		if (subordinates == null) {
-			if (other.subordinates != null)
-				return false;
-		} else if (!subordinates.equals(other.subordinates))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+		result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+		result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+		result = 31 * result + (credentials != null ? credentials.hashCode() : 0);
+		result = 31 * result + (manager != null ? manager.hashCode() : 0);
+		result = 31 * result + (subordinates != null ? subordinates.hashCode() : 0);
+		result = 31 * result + (directedNarrative != null ? directedNarrative.hashCode() : 0);
+		result = 31 * result + (section != null ? section.hashCode() : 0);
+		return result;
 	}
 }

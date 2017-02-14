@@ -19,6 +19,7 @@ public class SpringFoxConfiguration {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
+				.forCodeGeneration(true)
 				.select()
 				.apis(RequestHandlerSelectors.any())
 				.paths(PathSelectors.any())

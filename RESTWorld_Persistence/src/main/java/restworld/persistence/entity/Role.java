@@ -1,5 +1,6 @@
 package restworld.persistence.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,12 +8,13 @@ import javax.persistence.Id;
 import restworld.persistence.entity.superclass.BaseEntity;
 
 @Entity
-public class Role implements BaseEntity {
+public class Role implements BaseEntity<Long> {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
+	@Column(unique = true, nullable = false)
 	private String title;
 
 	public Long getId() {

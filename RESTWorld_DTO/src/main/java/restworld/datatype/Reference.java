@@ -1,22 +1,27 @@
 package restworld.datatype;
 
-public class Reference {
-	
-	private Long id;
+import restworld.persistence.entity.superclass.BaseEntity;
+
+import java.io.Serializable;
+
+public class Reference<Entity extends BaseEntity<Id>, Id extends Serializable> {
+
+	private Id id;
 
 	public Reference() {
-		
-	}
-	
-	public Reference(Long id) {
-		this.id = id;
+        super();
 	}
 
-	public Long getId() {
+	public Reference(Id id) {
+		this();
+	    this.id = id;
+	}
+
+	public Id getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Id id) {
 		this.id = id;
 	}
 
@@ -44,5 +49,5 @@ public class Reference {
 			return false;
 		return true;
 	}
-	
+
 }

@@ -13,14 +13,14 @@ import javax.validation.constraints.NotNull;
 import restworld.persistence.entity.superclass.BaseEntity;
 
 @Entity
-public class Section implements BaseEntity {
+public class Section implements BaseEntity<Long> {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	
 	@NotNull
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String name;
 	
 	@ManyToMany(mappedBy = "sections")

@@ -28,11 +28,11 @@ public class SectionService {
 
 	public SectionDto get(Long id) {
 		idChecker.exists(id);
-		return sectionMapper.sectionToSectionDto(sectionRepository.findOne(id));
+		return sectionMapper.toSectionDto(sectionRepository.findOne(id));
 	}
 
 	public Long post(SectionDto sectionDto) {
-		return sectionRepository.save(sectionMapper.sectionDtoToSection(sectionDto)).getId();
+		return sectionRepository.save(sectionMapper.toSection(sectionDto)).getId();
 	}
 
 	public boolean has(Long id) {
@@ -43,14 +43,14 @@ public class SectionService {
 
 	public void put(Long id, SectionDto sectionDto) {
 		idChecker.exists(id);
-		Section section = sectionMapper.sectionDtoToSection(sectionDto);
+		Section section = sectionMapper.toSection(sectionDto);
 		section.setId(id);
 		sectionRepository.save(section);
 	}
 	
 	public void patch(Long id, SectionDto sectionDto) {
 		idChecker.exists(id);
-		sectionRepository.save(serviceUtilities.copyNonNullProperties(sectionMapper.sectionDtoToSection(sectionDto), sectionRepository.findOne(id)));
+		sectionRepository.save(serviceUtilities.copyNonNullProperties(sectionMapper.toSection(sectionDto), sectionRepository.findOne(id)));
 	}
 	
 	public void delete(Long id) {

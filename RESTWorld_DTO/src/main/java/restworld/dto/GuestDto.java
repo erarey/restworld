@@ -6,6 +6,8 @@ import restworld.validation.group.RequiredFieldsNotNull;
 
 public class GuestDto {
 
+	private Long id;
+
 	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String firstName;
 	
@@ -15,7 +17,15 @@ public class GuestDto {
 	private String lastName;
 	
 	@NotNull(groups = RequiredFieldsNotNull.class)
-	private String username;
+	private CredentialsDto credentials;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -41,54 +51,35 @@ public class GuestDto {
 		this.lastName = lastName;
 	}
 
-	public String getUsername() {
-		return username;
+	public CredentialsDto getCredentials() {
+		return credentials;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setCredentials(CredentialsDto credentials) {
+		this.credentials = credentials;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		GuestDto guestDto = (GuestDto) o;
+
+		if (id != null ? !id.equals(guestDto.id) : guestDto.id != null) return false;
+		if (firstName != null ? !firstName.equals(guestDto.firstName) : guestDto.firstName != null) return false;
+		if (middleName != null ? !middleName.equals(guestDto.middleName) : guestDto.middleName != null) return false;
+		if (lastName != null ? !lastName.equals(guestDto.lastName) : guestDto.lastName != null) return false;
+		return credentials != null ? credentials.equals(guestDto.credentials) : guestDto.credentials == null;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+		result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+		result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+		result = 31 * result + (credentials != null ? credentials.hashCode() : 0);
 		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		GuestDto other = (GuestDto) obj;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (middleName == null) {
-			if (other.middleName != null)
-				return false;
-		} else if (!middleName.equals(other.middleName))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
 	}
 }

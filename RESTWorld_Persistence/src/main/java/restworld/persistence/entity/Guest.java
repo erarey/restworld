@@ -4,12 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import restworld.persistence.entity.embeddable.Credentials;
 import restworld.persistence.entity.embeddable.FullName;
-import restworld.persistence.entity.embeddable.WebAppCredentials;
 import restworld.persistence.entity.superclass.BaseEntity;
 
 @Entity
-public class Guest implements BaseEntity {
+public class Guest implements BaseEntity<Long> {
 
 	@Id
 	@GeneratedValue
@@ -17,7 +17,7 @@ public class Guest implements BaseEntity {
 	
 	private FullName name;
 	
-	private WebAppCredentials credentials;
+	private Credentials credentials;
 	
 	public Long getId() {
 		return id;
@@ -35,11 +35,11 @@ public class Guest implements BaseEntity {
 		this.name = name;
 	}
 
-	public WebAppCredentials getCredentials() {
+	public Credentials getCredentials() {
 		return credentials;
 	}
 
-	public void setCredentials(WebAppCredentials credentials) {
+	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
 

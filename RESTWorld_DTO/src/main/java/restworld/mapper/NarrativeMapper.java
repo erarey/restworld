@@ -2,13 +2,14 @@ package restworld.mapper;
 
 import org.mapstruct.Mapper;
 
+import restworld.datatype.Reference;
 import restworld.dto.NarrativeDto;
 import restworld.persistence.entity.Narrative;
 
 @Mapper(componentModel = "spring", uses = { ReferenceMapper.class })
 public interface NarrativeMapper {
 
-	NarrativeDto narrativeToNarrativeDto(Narrative narrative);
+	NarrativeDto toNarrativeDto(Narrative narrative);
 	
-	Narrative narrativeDtoToNarrative(NarrativeDto narrativeDto);
+	Narrative toNarrative(NarrativeDto narrativeDto);
 }

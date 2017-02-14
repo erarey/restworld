@@ -27,11 +27,11 @@ public class NarrativeService {
 
 	public NarrativeDto get(Long id) {
 		idChecker.exists(id);
-		return narrativeMapper.narrativeToNarrativeDto(narrativeRepository.findOne(id));
+		return narrativeMapper.toNarrativeDto(narrativeRepository.findOne(id));
 	}
 
 	public Long post(NarrativeDto narrativeDto) {
-		return narrativeRepository.save(narrativeMapper.narrativeDtoToNarrative(narrativeDto)).getId();
+		return narrativeRepository.save(narrativeMapper.toNarrative(narrativeDto)).getId();
 	}
 
 	public boolean has(Long id) {
@@ -42,14 +42,14 @@ public class NarrativeService {
 
 	public void put(Long id, NarrativeDto narrativeDto) {
 		idChecker.exists(id);
-		Narrative narrative = narrativeMapper.narrativeDtoToNarrative(narrativeDto);
+		Narrative narrative = narrativeMapper.toNarrative(narrativeDto);
 		narrative.setId(id);
 		narrativeRepository.save(narrative);
 	}
 	
 	public void patch(Long id, NarrativeDto narrativeDto) {
 		idChecker.exists(id);
-		narrativeRepository.save(serviceUtilities.copyNonNullProperties(narrativeMapper.narrativeDtoToNarrative(narrativeDto), narrativeRepository.findOne(id)));
+		narrativeRepository.save(serviceUtilities.copyNonNullProperties(narrativeMapper.toNarrative(narrativeDto), narrativeRepository.findOne(id)));
 	}
 	
 	public void delete(Long id) {

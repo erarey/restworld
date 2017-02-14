@@ -5,16 +5,28 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 import restworld.datatype.Reference;
+import restworld.persistence.entity.Employee;
+import restworld.persistence.entity.Narrative;
 import restworld.validation.group.RequiredFieldsNotNull;
 
 public class SectionDto {
+
+	private Long id;
 	
 	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String name;
 	
-	private Set<Reference> narratives;
+	private Set<Reference<Narrative, Long>> narratives;
 	
-	private Set<Reference> employees;
+	private Set<Reference<Employee, Long>> employees;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -24,57 +36,41 @@ public class SectionDto {
 		this.name = name;
 	}
 
-	public Set<Reference> getNarratives() {
+	public Set<Reference<Narrative, Long>> getNarratives() {
 		return narratives;
 	}
 
-	public void setNarratives(Set<Reference> narratives) {
+	public void setNarratives(Set<Reference<Narrative, Long>> narratives) {
 		this.narratives = narratives;
 	}
 
-	public Set<Reference> getEmployees() {
+	public Set<Reference<Employee, Long>> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(Set<Reference> employees) {
+	public void setEmployees(Set<Reference<Employee, Long>> employees) {
 		this.employees = employees;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((employees == null) ? 0 : employees.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((narratives == null) ? 0 : narratives.hashCode());
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		SectionDto that = (SectionDto) o;
+
+		if (id != null ? !id.equals(that.id) : that.id != null) return false;
+		if (name != null ? !name.equals(that.name) : that.name != null) return false;
+		if (narratives != null ? !narratives.equals(that.narratives) : that.narratives != null) return false;
+		return employees != null ? employees.equals(that.employees) : that.employees == null;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SectionDto other = (SectionDto) obj;
-		if (employees == null) {
-			if (other.employees != null)
-				return false;
-		} else if (!employees.equals(other.employees))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (narratives == null) {
-			if (other.narratives != null)
-				return false;
-		} else if (!narratives.equals(other.narratives))
-			return false;
-		return true;
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (narratives != null ? narratives.hashCode() : 0);
+		result = 31 * result + (employees != null ? employees.hashCode() : 0);
+		return result;
 	}
-
 }

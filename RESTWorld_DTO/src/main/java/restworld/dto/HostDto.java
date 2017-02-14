@@ -5,9 +5,13 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 import restworld.datatype.Reference;
+import restworld.persistence.entity.Narrative;
+import restworld.persistence.entity.Section;
 import restworld.validation.group.RequiredFieldsNotNull;
 
 public class HostDto {
+
+	private Long id;
 	
 	@NotNull(groups = RequiredFieldsNotNull.class)
 	private String firstName;
@@ -17,9 +21,17 @@ public class HostDto {
 	private String lastName;
 	
 	@NotNull(groups = RequiredFieldsNotNull.class)
-	private Reference section;
+	private Reference<Section, Long> section;
 	
-	private Set<Reference> narratives;
+	private Set<Reference<Narrative, Long>> narratives;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -45,70 +57,45 @@ public class HostDto {
 		this.lastName = lastName;
 	}
 
-	public Reference getSection() {
+	public Reference<Section, Long> getSection() {
 		return section;
 	}
 
-	public void setSection(Reference section) {
+	public void setSection(Reference<Section, Long> section) {
 		this.section = section;
 	}
 
-	public Set<Reference> getNarratives() {
+	public Set<Reference<Narrative, Long>> getNarratives() {
 		return narratives;
 	}
 
-	public void setNarratives(Set<Reference> narratives) {
+	public void setNarratives(Set<Reference<Narrative, Long>> narratives) {
 		this.narratives = narratives;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
-		result = prime * result + ((narratives == null) ? 0 : narratives.hashCode());
-		result = prime * result + ((section == null) ? 0 : section.hashCode());
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		HostDto hostDto = (HostDto) o;
+
+		if (id != null ? !id.equals(hostDto.id) : hostDto.id != null) return false;
+		if (firstName != null ? !firstName.equals(hostDto.firstName) : hostDto.firstName != null) return false;
+		if (middleName != null ? !middleName.equals(hostDto.middleName) : hostDto.middleName != null) return false;
+		if (lastName != null ? !lastName.equals(hostDto.lastName) : hostDto.lastName != null) return false;
+		if (section != null ? !section.equals(hostDto.section) : hostDto.section != null) return false;
+		return narratives != null ? narratives.equals(hostDto.narratives) : hostDto.narratives == null;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		HostDto other = (HostDto) obj;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (middleName == null) {
-			if (other.middleName != null)
-				return false;
-		} else if (!middleName.equals(other.middleName))
-			return false;
-		if (narratives == null) {
-			if (other.narratives != null)
-				return false;
-		} else if (!narratives.equals(other.narratives))
-			return false;
-		if (section == null) {
-			if (other.section != null)
-				return false;
-		} else if (!section.equals(other.section))
-			return false;
-		return true;
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+		result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+		result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+		result = 31 * result + (section != null ? section.hashCode() : 0);
+		result = 31 * result + (narratives != null ? narratives.hashCode() : 0);
+		return result;
 	}
-
-	
 }
