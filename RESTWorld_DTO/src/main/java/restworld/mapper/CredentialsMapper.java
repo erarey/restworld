@@ -27,6 +27,7 @@ public class CredentialsMapper {
     }
 
     public CredentialsDto toCredentialsDto(Credentials credentials) {
+        if (credentials == null) return null;
         CredentialsDto result = new CredentialsDto();
         result.setUsername(credentials.getUsername());
         result.setRoles(credentials.getRoles().stream().map(roleMapper::toString).collect(Collectors.toSet()));
@@ -34,21 +35,24 @@ public class CredentialsMapper {
     }
 
     private Credentials toCredentials(CredentialsDto dto) {
+        if (dto == null) return null;
         Credentials credentials = new Credentials();
         credentials.setUsername(dto.getUsername());
         credentials.setPassword(dto.getPassword());
-        credentials.setRoles(dto.getRoles().stream().map(roleMapper::toRole).collect(Collectors.toSet()));
+        credentials.setRoles(dto.getRoles() == null ? null : dto.getRoles().stream().map(roleMapper::toRole).collect(Collectors.toSet()));
         return credentials;
     }
 
     @EmployeeCredentials
     public Credentials resolveEmployeeCredentials(CredentialsDto dto) {
+        if (dto == null) return null;
         Employee employee = employees.findByCredentialsUsername(dto.getUsername());
         return employee != null ? employee.getCredentials() : toCredentials(dto);
     }
 
     @GuestCredentials
     public Credentials resolveGuestCredentials(CredentialsDto dto) {
+        if (dto == null) return null;
         Guest guest = guests.findByCredentialsUsername(dto.getUsername());
         return guest != null ? guest.getCredentials() : toCredentials(dto);
     }

@@ -16,10 +16,10 @@ public class RoleMapper {
     }
 
     public String toString(Role role) {
-        return role.getTitle();
+        return role == null ? null : role.getTitle();
     }
 
     public Role toRole(String title) {
-        return roles.findByTitle(title);
+        return title == null ? null : roles.findByTitle(title);
     }
 }
