@@ -10,7 +10,6 @@ import restworld.mapper.annotation.GuestCredentials;
 import restworld.persistence.entity.Employee;
 import restworld.persistence.entity.Guest;
 
-@Mapper(componentModel = "spring", uses = {ReferenceMapper.class, CredentialsMapper.class})
 public interface GuestMapper {
 
     @Mappings({

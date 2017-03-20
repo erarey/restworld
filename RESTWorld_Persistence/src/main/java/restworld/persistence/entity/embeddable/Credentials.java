@@ -12,8 +12,6 @@ import java.util.Set;
 @Embeddable
 public class Credentials {
 
-	@NotNull
-	@Column(unique = true, nullable = false)
 	private String username;
 
 	@NotNull
